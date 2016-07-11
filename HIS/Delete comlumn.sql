@@ -1,19 +1,34 @@
 -- Delete column
-
-alter table HIS_SERVICE_MAJORSURGERY  drop (HIS_Machine_User1_ID, HIS_Machine_User2_ID,HIS_Outside_User_ID,HIS_Tool_User_ID);
-
-delete ad_field af  where af.ad_column_id = 1100561;
-delete AD_PRINTFORMATITEM ap where ap.ad_column_id = 1100561;
-delete ad_column ac where ac.ad_column_id = 1100561;
+delete ad_field af  where af.ad_column_id = 1109353;
+delete AD_PRINTFORMATITEM ap where ap.ad_column_id = 1109353;
+delete ad_column ac where ac.ad_column_id = 1109353;
 
 
- select ac.* from ad_field af
- inner join ad_column ac on ac.ad_column_id = af.ad_column_id
- inner join AD_ELEMENT ae on ae.AD_ELEMENT_ID = ac.AD_ELEMENT_ID
- where ae.AD_Element_ID=1100043
- ;
+-- Delete Field
+Delete Ad_Field_Trl where Ad_Field_ID in (select Ad_Field_ID from Ad_Field where AD_Tab_ID = 1100169);
+Delete Ad_Field where AD_Tab_ID = 1100169; 
+-- Clean field no visible
+Delete Ad_Field where AD_Tab_ID = 1001031 and ISDISPLAYED = 'N';
+
+-- Update 
+update Ad_Field set ColumnSpan = 2 where AD_Tab_ID = 1100405; 
+
+-- Update Grid view
+update Ad_Field set ISDISPLAYEDGRID = 'N' where AD_Tab_ID = 1100401;
+update Ad_Field set ISDISPLAYEDGRID = 'Y' where ISDISPLAYED = 'Y' and AD_Tab_ID = 1100622;
+update Ad_Field set SEQNOGRID = SEQNO where AD_FIELD_ID in (select Ad_Field_ID from Ad_Field where AD_Tab_ID = 1100622);
 
 
-delete AD_TAB_CUSTOMIZATION where AD_Tab_ID=1100298;
+-- Update Column 
+update AD_Column set IsUpdateable = 'Y' where AD_Reference_ID = 28;
 
-select * from all_constraints where CONSTRAINT_NAME like 'HISMEDICINEGROUPPARENT_HISMEDI';
+
+select * from all_constraints where CONSTRAINT_NAME = 'HISCONSUMPTIONGRP_HISSERVICEB';
+alter table HIS_SERVICE_BLOOD drop constraint HISCONSUMPTIONGRP_HISSERVICEB;
+
+--
+delete AD_TAB_CUSTOMIZATION where  AD_Tab_ID=1100401;
+
+-- Drop Column in Oracle
+select * from HIS_Service_MedicTestGroup;
+alter table HIS_Service_MedicTestGroup drop column C50Name;
