@@ -5,10 +5,13 @@ delete ad_column ac where ac.ad_column_id = 1109353;
 
 
 -- Delete Field
-Delete Ad_Field_Trl where Ad_Field_ID in (select Ad_Field_ID from Ad_Field where AD_Tab_ID = 1100169);
-Delete Ad_Field where AD_Tab_ID = 1100169; 
+Delete Ad_Field_Trl where Ad_Field_ID in (select Ad_Field_ID from Ad_Field where AD_Tab_ID = 1100299);
+Delete Ad_Field where AD_Tab_ID = 1100299; 
 -- Clean field no visible
-Delete Ad_Field where AD_Tab_ID = 1001031 and ISDISPLAYED = 'N';
+delete from Ad_Field where AD_Tab_ID = 1000141 and ISDISPLAYED = 'N' and 
+AD_Column_ID not in (select AD_Column_ID from AD_Column where AD_Element_ID in (102, 113)) and
+AD_Column_ID not in (select AD_Column_ID from AD_Column where AD_Reference_ID = 13) and 
+AD_Column_ID not in (select AD_Column_ID from AD_Column where ColumnName like '%_UU');
 
 -- Update 
 update Ad_Field set ColumnSpan = 2 where AD_Tab_ID = 1100405; 
