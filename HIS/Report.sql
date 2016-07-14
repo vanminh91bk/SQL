@@ -1,2 +1,2 @@
-select * from REPORT_IN_MENU where MENUNAME like '%15%';
+select * from REPORT_IN_MENU where MENUNAME like '%21%';
 
