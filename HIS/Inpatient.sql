@@ -51,15 +51,24 @@ update HIS_Service_Medicine hsm set
 hsm.ServiceName = (select hs.Name from HIS_Service hs where hs.HIS_Service_ID = hsm.HIS_Service_ID) 
 where HIS_PATIENTHISTORY_ID = 2046819;
 
+-- Update Price 
+update HIS_Service_Accessory hsa set 
+hsa.UNITPRICE_ASSURANCE = (select hs.PriceAssurance from HIS_Service hs where hs.HIS_Service_ID = hsa.HIS_Service_ID),
+hsa.UNITPRICE_SERVICE = (select hs.PriceService from HIS_Service hs where hs.HIS_Service_ID = hsa.HIS_Service_ID),
+hsa.UNITPRICE_DIFFERENCE = (select hs.PRICEDIFF from HIS_Service hs where hs.HIS_Service_ID = hsa.HIS_Service_ID)
+where hsa.HIS_PATIENTHISTORY_ID = 2049402 and hsa.HIS_Service_ID = 202693312;
+
 -- Update Actdate 
+update HIS_Service_Bed set ActDate = to_date('25/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2046731 and From_Department_ID = 1000219;
+update HIS_Service_MedicalTest set ActDate = to_date('25/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2046731 and From_Department_ID = 1000219;
+update HIS_Service_DiagnosticImage set ActDate = to_date('25/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2046731 and From_Department_ID = 1000219;
+--update HIS_Service_MajorSurgery set ActDate = to_date('25/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2046731 and From_Department_ID = 1000219;
+update HIS_CheckUp set ActDate = to_date('25/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2046731 and From_Department_ID = 1000219;
 
-update HIS_Service_Bed set ActDate = to_date('23/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2047526 and From_Department_ID = 1000218 and Trunc(ActDate) = to_date('23/06/2016', 'DD/MM/YYYY');
-update HIS_Service_MedicalTest set ActDate = to_date('23/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2047526 and From_Department_ID = 1000218 and Trunc(ActDate) = to_date('23/06/2016', 'DD/MM/YYYY');
-update HIS_Service_DiagnosticImage set ActDate = to_date('23/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2047526 and From_Department_ID = 1000218 and Trunc(ActDate) = to_date('23/06/2016', 'DD/MM/YYYY');
-update HIS_Service_MajorSurgery set ActDate = to_date('23/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2047526 and From_Department_ID = 1000218 and Trunc(ActDate) = to_date('23/06/2016', 'DD/MM/YYYY');
-update HIS_CheckUp set ActDate = to_date('23/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2047526 and From_Department_ID = 1000218 and Trunc(ActDate) = to_date('23/06/2016', 'DD/MM/YYYY');
+update HIS_Service_Medicine set ActDate = to_date('25/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2046731 and From_Department_ID = 1000219;
+update HIS_Service_Accessory set ActDate = to_date('25/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2046731 and From_Department_ID = 1000219;
+update HIS_Service_Chemical set ActDate = to_date('25/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2046731 and From_Department_ID = 1000219;
+update HIS_Service_Blood set ActDate = to_date('25/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2046731 and From_Department_ID = 1000219;
 
-update HIS_Service_Medicine set ActDate = to_date('23/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2047526 and From_Department_ID = 1000218 and Trunc(ActDate) = to_date('23/06/2016', 'DD/MM/YYYY');
-update HIS_Service_Accessory set ActDate = to_date('23/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2047526 and From_Department_ID = 1000218 and Trunc(ActDate) = to_date('23/06/2016', 'DD/MM/YYYY');
-update HIS_Service_Chemical set ActDate = to_date('23/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2047526 and From_Department_ID = 1000218 and Trunc(ActDate) = to_date('23/06/2016', 'DD/MM/YYYY');
-update HIS_Service_Blood set ActDate = to_date('23/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2047526 and From_Department_ID = 1000218 and Trunc(ActDate) = to_date('23/06/2016', 'DD/MM/YYYY');
+
+select * from HIS_DEPARTMENT;

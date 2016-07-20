@@ -13,36 +13,45 @@ update HIS_Service_DiagnosticImage set IsPaidA = 'N' where HIS_PatientHistory_ID
 
 
 -- Fix error HIS_InvoiceS in Service_Union and HIS_Invoice in Service_Union not match
-select (select hil.HIS_Invoice_ID from HIS_InvoiceLine hil where hil.HIS_INVOICETYPE = 'A' 
-and HIS_ServiceType = 'MedicalTest' and HIS_Service_Record_ID = hsm.HIS_Service_MedicalTest_ID
-and hsm.HIS_PatientHistory_ID = hil.HIS_PatientHistory_ID) HIS_INVOICE_ID , hsm.HIS_INVOICEA_ID from HIS_Service_MedicalTest hsm
+select (select hil.HIS_Invoice_ID from HIS_InvoiceLine hil where hil.HIS_INVOICETYPE = 'S' 
+and HIS_ServiceType = 'ImgDiag' and HIS_Service_Record_ID = hsm.HIS_SERVICE_DIAGNOSTICIMAGE_ID
+and hsm.HIS_PatientHistory_ID = hil.HIS_PatientHistory_ID) HIS_INVOICE_ID , hsm.HIS_INVOICES_ID from HIS_SERVICE_DIAGNOSTICIMAGE hsm
 where hsm.Created < to_date('01052016', 'DDMMYYYY');
 
-update HIS_Service_Medicaltest hsm set hsm.HIS_INVOICES_ID = 
+update HIS_SERVICE_DIAGNOSTICIMAGE hsm set hsm.HIS_INVOICES_ID = 
 (
-select hil.HIS_Invoice_ID from HIS_InvoiceLine hil where hil.HIS_INVOICETYPE = 'S' 
-and HIS_ServiceType = 'MedicalTest' and HIS_Service_Record_ID = hsm.HIS_Service_Medicaltest_ID
-and hsm.HIS_PatientHistory_ID = hil.HIS_PatientHistory_ID 
+select hil.HIS_Invoice_ID from HIS_InvoiceLine hil 
+inner join HIS_Invoice hi on hi.HIS_Invoice_ID = hil.HIS_Invoice_ID
+where hil.HIS_INVOICETYPE = 'S' 
+and HIS_ServiceType = 'ImgDiag' and HIS_Service_Record_ID = hsm.HIS_SERVICE_DIAGNOSTICIMAGE_ID
+and hsm.HIS_PatientHistory_ID = hil.HIS_PatientHistory_ID  and NVL(hi.ISSETTLED, 'N') = 'N' and rownum <= 1
 )
-where hsm.HIS_PATIENTHISTORY_ID = 2047927  and NVL((
-select hil.HIS_Invoice_ID from HIS_InvoiceLine hil where hil.HIS_INVOICETYPE = 'S' 
-and HIS_ServiceType = 'MedicalTest' and HIS_Service_Record_ID = hsm.HIS_Service_Medicaltest_ID
-and hsm.HIS_PatientHistory_ID = hil.HIS_PatientHistory_ID
-), 0) > 0;
+where NVL((
+select hil.HIS_Invoice_ID from HIS_InvoiceLine hil 
+inner join HIS_Invoice hi on hi.HIS_Invoice_ID = hil.HIS_Invoice_ID
+where hil.HIS_INVOICETYPE = 'S' 
+and HIS_ServiceType = 'ImgDiag' and HIS_Service_Record_ID = hsm.HIS_SERVICE_DIAGNOSTICIMAGE_ID
+and hsm.HIS_PatientHistory_ID = hil.HIS_PatientHistory_ID  and NVL(hi.ISSETTLED, 'N') = 'N' and rownum <= 1
+), 0) > 0 and hsm.Created < to_date('01072016', 'DDMMYYYY') and hsm.ISINPATIENT = 'N';
 
+select * from HIS_Invoice;
 
 -- Update HIS_InvoiceA_ID
-update HIS_Service_MajorSurgery hsm set hsm.HIS_INVOICEA_ID = 
+update HIS_Service_Medicaltest hsm set hsm.HIS_INVOICEA_ID = 
 (
-select hil.HIS_Invoice_ID from HIS_InvoiceLine hil where hil.HIS_INVOICETYPE = 'A' 
-and HIS_ServiceType = 'Surgery' and HIS_Service_Record_ID = hsm.HIS_Service_MajorSurgery_ID
-and hsm.HIS_PatientHistory_ID = hil.HIS_PatientHistory_ID and rownum <=1
+select hil.HIS_Invoice_ID from HIS_InvoiceLine hil 
+inner join HIS_Invoice hi on hi.HIS_Invoice_ID = hil.HIS_Invoice_ID
+where hil.HIS_INVOICETYPE = 'A' 
+and HIS_ServiceType = 'MedicalTest' and HIS_Service_Record_ID = hsm.HIS_Service_Medicaltest_ID
+and hsm.HIS_PatientHistory_ID = hil.HIS_PatientHistory_ID  and NVL(hi.ISSETTLED, 'N') = 'N' and rownum <= 1
 )
-where hsm.HIS_PATIENTHISTORY_ID = 2040301  and NVL((
-select hil.HIS_Invoice_ID from HIS_InvoiceLine hil where hil.HIS_INVOICETYPE = 'A' 
-and HIS_ServiceType = 'Surgery' and HIS_Service_Record_ID = hsm.HIS_Service_MajorSurgery_ID
-and hsm.HIS_PatientHistory_ID = hil.HIS_PatientHistory_ID and rownum <=1
-), 0) > 0;
+where NVL((
+select hil.HIS_Invoice_ID from HIS_InvoiceLine hil 
+inner join HIS_Invoice hi on hi.HIS_Invoice_ID = hil.HIS_Invoice_ID
+where hil.HIS_INVOICETYPE = 'A' 
+and HIS_ServiceType = 'MedicalTest' and HIS_Service_Record_ID = hsm.HIS_Service_Medicaltest_ID
+and hsm.HIS_PatientHistory_ID = hil.HIS_PatientHistory_ID  and NVL(hi.ISSETTLED, 'N') = 'N' and rownum <= 1
+), 0) > 0 and hsm.Created < to_date('01072016', 'DDMMYYYY') and hsm.ISINPATIENT = 'N';
 
 -- Update Service In Hospital
 update HIS_Service_MedicalTest hsm set hsm.ISSERVICEINHOSPITAL = 
