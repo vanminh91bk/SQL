@@ -1,5 +1,5 @@
 select ad_client_id, name, fullname, password, ad_user_id, ISACTIVE from ad_user
-where remove_sign(name) like remove_sign('%adminanh%');
+where remove_sign(name) like remove_sign('%kanhtckt%');
 
 select name, password from ad_user where 
 remove_sign(name) like remove_sign('tiepdon');

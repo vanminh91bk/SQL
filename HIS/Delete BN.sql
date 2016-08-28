@@ -122,7 +122,13 @@ WHERE HIS_PatientHistory_ID IN (SELECT HIS_PatientHistory_ID FROM HIS_PatientHis
 DELETE FROM HIS_IP_Invoice_Total 
 WHERE HIS_PatientHistory_ID IN (SELECT HIS_PatientHistory_ID FROM HIS_PatientHistory WHERE Name like '%TEST%');
 
+DELETE FROM HIS_MEDICALRECORDLINE 
+WHERE HIS_PatientHistory_ID IN (SELECT HIS_PatientHistory_ID FROM HIS_PatientHistory WHERE Name like '%TEST%');
+
+DELETE FROM HIS_SERVICE_OTHER 
+WHERE HIS_PatientHistory_ID IN (SELECT HIS_PatientHistory_ID FROM HIS_PatientHistory WHERE Name like '%TEST%');
+
 DELETE FROM HIS_PatientHistory 
 WHERE HIS_PatientHistory_ID IN (SELECT HIS_PatientHistory_ID FROM HIS_PatientHistory WHERE Name like '%TEST%');
 
---select * from all_constraints where constraint_name like 'HISPATIENTBED_HISSERVICEBEDGRO';
+--select * from all_constraints where constraint_name like 'HISPATIENTHISTORY_HISSERVICEOT';

@@ -12,31 +12,38 @@ hsm.HIS_SURGERYFORM_ID = (select hs.HIS_SURGERYFORM_ID from HIS_Surgery hs where
 hsm.HIS_SURGERYTYPE_ID = (select hs.HIS_surgerytype_ID from HIS_Surgery hs where hs.HIS_Service_ID = hsm.HIS_Service_ID);
 
 --
+update HIS_PatientHistory set InpatientState = 'InHospital' where HIS_PatientHistory_ID = 2050496;
+select ISPAID, HIS_INVOICETYPE from HIS_IP_INVOICE_TOTAL where HIS_PATIENTHISTORY_ID = 2051673;
+select ISPAID, HIS_INVOICETYPE, HIS_INPATIENT_INVOICE_ID from HIS_INPATIENT_INVOICE where HIS_PATIENTHISTORY_ID = 2050496;
+update HIS_INPATIENT_INVOICE set ISACTIVE = 'N' where HIS_INPATIENT_INVOICE_ID = 2019508;
+--
 
-select HIS_PatientHistory_ID from HIS_PatientHistory where HIS_MedicalRecordNo = '1600695';--kc2010502400513
+select HIS_PatientHistory_ID, INPATIENTSTATE, Name from HIS_PatientHistory where HIS_MedicalRecordNo = '1602022';--kc2010502400513
 select HIS_PatientHistory_ID from HIS_PatientHistory where Value = '1607000362';--kc2010502400513
-select TIMEGOIN, TIMEGOOUT, HIS_PatientHistory_ID, HIS_MedicalRecordNo, InpatientState from HIS_PatientHistory where Assurance_ID = 'GD4013102302266';--2045600
-select TIMEGOIN, TIMEGOOUT, HIS_PatientHistory_ID, HIS_MedicalRecordNo, InPatientState, Updated from HIS_PatientHistory where Remove_Sign(Name) = Remove_Sign('BẠCH THANH TUẤN');--2045600
+select TIMEGOIN, TIMEGOOUT, HIS_PatientHistory_ID, HIS_MedicalRecordNo, InpatientState from HIS_PatientHistory where Assurance_ID = upper('te1370702201535');--2045600
+select TIMEGOIN, TIMEGOOUT, HIS_PatientHistory_ID, HIS_MedicalRecordNo, InPatientState, Updated, HIS_Department_ID from HIS_PatientHistory where Remove_Sign(Name) = Remove_Sign('test_ngochieu_02');--2045600
 select * from HIS_PatientHistory where Remove_Sign(Name) = Remove_Sign('Nguyễn Thị Thân');--2045600
+select HIS_PatientHistory_ID, INPATIENTSTATE, Name from HIS_PatientHistory where HIS_PATIENTHISTORY_ID = 2051673;
+
 
 select * from HIS_Service_Union where (IsPaidA = 'N' or IsPaidS = 'N' or IsPaid = 'N') and HIS_PatientHistory_ID = 2089702;
 
-update HIS_Service_Bed set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2127322;
-update HIS_Service_MedicalTest set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2127322;
-update HIS_Service_DiagnosticImage set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2127322;
-update HIS_Service_MajorSurgery set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2127322;
-update HIS_CheckUp set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2127322;
+update HIS_Service_Bed set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2163135;
+update HIS_Service_MedicalTest set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2163135;
+update HIS_Service_DiagnosticImage set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2163135;
+update HIS_Service_MajorSurgery set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2163135;
+update HIS_CheckUp set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2163135;
 
-update HIS_Service_Medicine set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2127322;
-update HIS_Service_Accessory set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2127322;
+update HIS_Service_Medicine set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2163135;
+update HIS_Service_Accessory set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2163135;
 update HIS_Service_Chemical set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2127322;
 update HIS_Service_Blood set IsPaidA = 'Y' , IsPaidS = 'Y' , IsPaid = 'Y' where HIS_PatientHistory_ID = 2127322;
 
 --
-update HIS_PatientHistory set InpatientState = 'OutHospital', TimeGoOut = Sysdate -14 where HIS_PatientHistory_ID = 2047764;
-update HIS_IP_Invoice_Total set IsPaid = 'Y', PayTime = Sysdate -1 where HIS_PatientHistory_ID = 2045564;
-update HIS_IP_InvoiceLine set IsPaid = 'Y', PayTime = Sysdate -1 where HIS_PatientHistory_ID = 2045564;
-update HIS_InPatient_Invoice set IsPaid = 'Y', PayTime = Sysdate -1 where HIS_PatientHistory_ID = 2045564;
+update HIS_PatientHistory set InpatientState = 'PaidOut', TimeGoOut = Sysdate -14 where HIS_PatientHistory_ID = 2049905;
+update HIS_IP_Invoice_Total set IsPaid = 'Y', PayTime = Sysdate -1 where HIS_PatientHistory_ID = 2045670;
+update HIS_IP_InvoiceLine set IsPaid = 'Y', PayTime = Sysdate -1 where HIS_PatientHistory_ID = 2045670;
+update HIS_InPatient_Invoice set IsPaid = 'Y', PayTime = Sysdate -1 where HIS_PatientHistory_ID = 2045670;
 
 --
 
@@ -71,4 +78,6 @@ update HIS_Service_Chemical set ActDate = to_date('25/06/2016 23:00:00', 'DD/MM/
 update HIS_Service_Blood set ActDate = to_date('25/06/2016 23:00:00', 'DD/MM/YYYY HH24:MI:SS') where HIS_PatientHistory_ID = 2046731 and From_Department_ID = 1000219;
 
 
-select * from HIS_DEPARTMENT;
+select * from HIS_DEPARTMENT where HIS_DEPARTMENT_ID = 1000233;
+
+select * from AD_CHANGELOG_V2 where RECORD_ID = 2051673 and TABLENAME = 'HIS_PatientHistory';
